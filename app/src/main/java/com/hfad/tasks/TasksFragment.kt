@@ -5,7 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.hfad.tasks.databinding.FragmentTasksBinding
+import com.hfad.tasks.model.TaskDatabase
+import com.hfad.tasks.viewmodel.TasksViewModel
+import com.hfad.tasks.viewmodel.TasksViewModelFactory
 
 
 class TasksFragment : Fragment() {
@@ -23,6 +27,14 @@ class TasksFragment : Fragment() {
 
         _binding = FragmentTasksBinding.inflate(inflater, container, false)
         val view = binding.root
+        /*12)получения объекта TaskDao и создания TasksViewModelFactory.
+        Затем код передает фабрику поставщику модели представления,
+        который использует ее для получения экземпляра TasksViewModel.*/
+        val application = requireNotNull(this.activity).application
+        val dao = TaskDatabase.getInstence(application).taskDao
+        val viewModelFactory = TasksViewModelFactory(dao)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(TasksViewModel::class.java)
+        binding.viewModel = viewModel
         return view
     }
 
@@ -30,4 +42,4 @@ class TasksFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    }
+}

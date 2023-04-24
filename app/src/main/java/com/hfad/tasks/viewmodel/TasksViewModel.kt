@@ -1,19 +1,11 @@
 package com.hfad.tasks.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.hfad.tasks.model.Task
 import com.hfad.tasks.model.TaskDao
+import kotlinx.coroutines.launch
 
-class TasksViewModel(val dao: TaskDao) : ViewModel() {
-    var newTaskName = " "
-
-    fun addTask() {
-        val task = Task()
-        task.taskName = newTaskName
-        dao.insert(task)
-    }
-
-}
 /**
  * Мы собираемся обновить код view model ,чтобы TasksFragment мог использовать его для вставки новых записей задач.
  * Чтобы сделать это, коду нужны три вещи:
@@ -28,3 +20,21 @@ TasksViewModel будет использовать этот объект для 
 3)	Метод AddTask(), который будет вызывать TasksFragment
 Этот метод создаст новый объект Task, задаст ему имя и вставит его в базу данных, вызвав метод insert() TaskDao.
  */
+
+class TasksViewModel(val dao: TaskDao) : ViewModel() {
+    var newTaskName = " "
+
+    fun addTask() {
+        viewModelScope.launch {
+            val task = Task()
+            task.taskName = newTaskName
+            dao.insert(task)
+        }
+    }
+
+}
+/*10)Запустите метод insert() в фоновом режиме
+ viewModelScope.launch
+Это изменение означает, что каждый раз, когда вызывается метод AddTask(),
+он будет использовать метод insert() TaskDao (сопрограмма) для вставки записей
+в фоновом режиме.*/

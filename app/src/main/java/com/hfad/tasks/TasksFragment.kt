@@ -27,7 +27,7 @@ class TasksFragment : Fragment() {
 
         _binding = FragmentTasksBinding.inflate(inflater, container, false)
         val view = binding.root
-        /*12)получения объекта TaskDao и создания TasksViewModelFactory.
+        /*12)получение объекта TaskDao и создание TasksViewModelFactory.
         Затем код передает фабрику поставщику модели представления,
         который использует ее для получения экземпляра TasksViewModel.*/
         val application = requireNotNull(this.activity).application
@@ -35,6 +35,8 @@ class TasksFragment : Fragment() {
         val viewModelFactory = TasksViewModelFactory(dao)
         val viewModel = ViewModelProvider(this, viewModelFactory).get(TasksViewModel::class.java)
         binding.viewModel = viewModel
+        //15)Макет реагирует на текущие обновления данных (data binding)
+        binding.lifecycleOwner = viewLifecycleOwner
         return view
     }
 

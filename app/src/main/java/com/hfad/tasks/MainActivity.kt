@@ -2,6 +2,7 @@ package com.hfad.tasks
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.hfad.tasks.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

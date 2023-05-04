@@ -1,5 +1,6 @@
 package com.hfad.tasks.viewmodel
 
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hfad.tasks.model.Task
@@ -24,6 +25,13 @@ TasksViewModel будет использовать этот объект для 
 class TasksViewModel(val dao: TaskDao) : ViewModel() {
     var newTaskName = " "
 
+    //13) обновим приложение так, чтобы TasksFragment отображал список всех вставленных записей
+    //13.1) используем getAll(), чтобы получить все задачи из базы данных
+    private val tasks = dao.getAll()
+    val taskString = Transformations.map(tasks) { tasks ->
+        formatTasks(tasks)
+    }
+
     fun addTask() {
         viewModelScope.launch {
             val task = Task()
@@ -32,9 +40,27 @@ class TasksViewModel(val dao: TaskDao) : ViewModel() {
         }
     }
 
+    fun formatTasks(tasks: List<Task>): String {
+        return tasks.fold("") { str, item ->
+            str + '\n' + formatTask(item)
+        }
+
+    }
+
+    fun formatTask(task: Task): String {
+        var str = "ID: ${task.taskId}"
+        str += '\n' + "Name: ${task.taskName}"
+        str += '\n' + "Complete: ${task.taskDone}" + '\n'
+        return str
+    }
+
 }
 /*10)Запустите метод insert() в фоновом режиме
  viewModelScope.launch
 Это изменение означает, что каждый раз, когда вызывается метод AddTask(),
 он будет использовать метод insert() TaskDao (сопрограмма) для вставки записей
-в фоновом режиме.*/
+в фоновом режиме.
+
+14)Необходимо добавить свойство tasksString в TasksViewModel, а затем использовать привязку данных для отображения
+его значения в макете TasksFragment. Такой подход означает, что мы сможем отображать все задачи
+пользователя в текстовом представлении, которое всегда остается актуальным.*/

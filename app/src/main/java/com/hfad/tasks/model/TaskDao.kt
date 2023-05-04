@@ -12,7 +12,7 @@ import androidx.room.Update
 /*4)Сообщаем Room, что интерфейс TaskDao определяет методы доступа к данным.
 Это делается путем пометки интерфейса аннотацией @Dao:*/
 @Dao
-interface TaskDao {
+interface TaskDao{
     @Insert
    suspend fun insert(task: Task)
 
@@ -30,5 +30,5 @@ interface TaskDao {
 
 }
 /*9)Отметьте каждый из методов доступа к данным DAO с помощью suspend.
-Это превращает каждый метод в сопрограмму (Coroutine),
+Это превращает каждый метод в сопрограмму (Coroutines),
 которая выполняется в фоновом режиме и может быть приостановлена*/

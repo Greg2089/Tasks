@@ -5,20 +5,13 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.tasks.R
+import com.hfad.tasks.diff_util.TaskDiffItemCallback
 import com.hfad.tasks.model.Task
 
-class TaskItemAdapter : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>() {
-    //region Для данных recycler view
-    var data = listOf<Task>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-    //endregion
-
-    override fun getItemCount() = data.size //количество элементов
+class TaskItemAdapter : ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(TaskDiffItemCallback()){
 
     //onCreateViewHolder вызывается, когда необходимо создать viewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskItemViewHolder =
@@ -26,7 +19,7 @@ class TaskItemAdapter : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>
 
     //onBindViewHolder вызывается всякий раз, когда в recycler view требуется отобразить данные.
     override fun onBindViewHolder(holder: TaskItemViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 

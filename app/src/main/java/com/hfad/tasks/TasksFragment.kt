@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hfad.tasks.databinding.FragmentTasksBinding
 import com.hfad.tasks.model.TaskDatabase
+import com.hfad.tasks.recycler.TaskItemAdapter
 import com.hfad.tasks.viewmodel.TasksViewModel
 import com.hfad.tasks.viewmodel.TasksViewModelFactory
 
@@ -37,6 +38,10 @@ class TasksFragment : Fragment() {
         binding.viewModel = viewModel
         //15)Макет реагирует на текущие обновления данных (data binding)
         binding.lifecycleOwner = viewLifecycleOwner
+
+        //recyclerView
+        val adapter = TaskItemAdapter()
+        binding.taskList.adapter = adapter
         return view
     }
 

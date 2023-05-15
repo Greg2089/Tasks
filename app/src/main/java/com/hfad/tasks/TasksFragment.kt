@@ -47,7 +47,7 @@ class TasksFragment : Fragment() {
         //livedata. Наблюдаем view model's tasks property, передаем данные адаптеру
         viewModel.tasks.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                adapter.submitList(it)
             }
         })
         return view

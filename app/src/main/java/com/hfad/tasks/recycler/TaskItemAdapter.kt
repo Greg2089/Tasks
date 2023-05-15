@@ -2,12 +2,9 @@ package com.hfad.tasks.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hfad.tasks.R
+import com.hfad.tasks.databinding.TaskItemBinding
 import com.hfad.tasks.diff_util.TaskDiffItemCallback
 import com.hfad.tasks.model.Task
 
@@ -23,23 +20,20 @@ class TaskItemAdapter : ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(Ta
         holder.bind(item)
     }
 
-    class TaskItemViewHolder(val rootView: CardView) : RecyclerView.ViewHolder(rootView) {
-        //ссылки на TextView и CheckBox
-        val taskName = rootView.findViewById<TextView>(R.id.task_name)
-        val taskDone = rootView.findViewById<CheckBox>(R.id.task_done)
+    class TaskItemViewHolder(val binding: TaskItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
 
         companion object {
             fun inflateFrom(parent: ViewGroup): TaskItemViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.task_item, parent, false) as CardView
-                return TaskItemViewHolder(view)
+                val binding = TaskItemBinding.inflate(layoutInflater,parent,false)
+                return TaskItemViewHolder(binding)
             }
         }
 
         // добавление данных в макет view holder
         fun bind(item: Task) {
-            taskName.text = item.taskName
-            taskDone.isChecked = item.taskDone
+           binding.task = item
         }
     }
 

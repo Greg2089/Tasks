@@ -1,5 +1,7 @@
 package com.hfad.tasks.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hfad.tasks.model.Task
@@ -28,6 +30,10 @@ class TasksViewModel(val dao: TaskDao) : ViewModel() {
     //13.1) используем getAll(), чтобы получить все задачи из базы данных
     val tasks = dao.getAll()
 
+    //17.2) свойство live data содержит идентификатор задачи, на которую нажимает пользователь
+    private val _navigateToTask = MutableLiveData<Long?>()
+    val navigateToTask: LiveData<Long?>
+        get() = _navigateToTask
 
     fun addTask() {
         viewModelScope.launch {
@@ -36,7 +42,19 @@ class TasksViewModel(val dao: TaskDao) : ViewModel() {
             dao.insert(task)
         }
     }
+    /*Каждый раз, когда пользователь нажимает на задачу в recycler view, мы хотим, чтобы
+    TasksFragment переходил к EditTaskFragment и передавал ему идентификатор задачи.
+     Методы onTaskClicked() и onTaskNavigated() будут использоваться для установки значения
+     резервного свойства navigateToTask. onTaskClicked()присвоит свойству идентификатор задачи,
+      а onTaskNavigated()присвоит ему значение null.
 
+*/
+fun onTaskClicked (taskId: Long){
+    _navigateToTask.value = taskId
+}
+    fun onTaskNavigated (){
+        _navigateToTask.value = null
+    }
 
 }
 /*10)Запустите метод insert() в фоновом режиме

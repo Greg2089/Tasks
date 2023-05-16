@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     //Room
     id 'kotlin-kapt'
+    //Safe Args
+    id 'androidx.navigation.safeargs' version '2.4.2' apply false
 }
 
 android {
@@ -31,6 +33,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    //safe args
+    apply plugin: 'androidx.navigation.safeargs'
     buildFeatures {
 
         //data binding
@@ -51,6 +55,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.3.0'
     //card view
     implementation 'androidx.cardview:cardview:1.0.0'
+    //Компонент Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
 
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

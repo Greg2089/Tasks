@@ -1,4 +1,4 @@
-package com.hfad.tasks
+package com.hfad.tasks.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -38,7 +38,7 @@ class TaskItemAdapter(val clickListener: (taskId: Long) -> Unit) :
         fun bind(item: Task, clickListener: (taskId: Long) -> Unit) {
             binding.task = item
             //17.1) значения становятся кликабельными, лямбда выполняется при нажатии
-            binding.root.setOnClickListener{clickListener(item.taskId)}
+            binding.root.setOnClickListener { clickListener(item.taskId) }
         }
     }
 

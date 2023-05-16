@@ -1,13 +1,13 @@
-package com.hfad.tasks
+package com.hfad.tasks.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.hfad.tasks.databinding.FragmentTasksBinding
 import com.hfad.tasks.model.TaskDatabase
 import com.hfad.tasks.recycler.TaskItemAdapter
@@ -24,13 +24,11 @@ class TasksFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         _binding = FragmentTasksBinding.inflate(inflater, container, false)
-        val view = binding.root
-        /*12)получение объекта TaskDao и создание TasksViewModelFactory.
+        val view = binding.root/*12)получение объекта TaskDao и создание TasksViewModelFactory.
         Затем код передает фабрику поставщику модели представления,
         который использует ее для получения экземпляра TasksViewModel.*/
         val application = requireNotNull(this.activity).application
@@ -42,9 +40,10 @@ class TasksFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         //recyclerView
-        val adapter = TaskItemAdapter{
-            //17.1) передаю лямбду конструктору TaskItemAdapter
-            taskId ->  Toast.makeText(context, "Задача № $taskId", Toast.LENGTH_SHORT).show()
+        val adapter = TaskItemAdapter {
+            //17.2) вызываем метод для вывода тоста
+                taskId ->
+            viewModel.onTaskClicked(taskId)
         }
         binding.taskList.adapter = adapter
 
@@ -52,6 +51,13 @@ class TasksFragment : Fragment() {
         viewModel.tasks.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+            }
+        })
+        viewModel.navigateToTask.observe(viewLifecycleOwner, Observer { taskId ->
+            taskId?.let {
+                val action = TasksFragmentDirections.actionTasksFragmentToEditTaskFragment(taskId)
+                this.findNavController().navigate(action)
+                viewModel.onTaskNavigated()
             }
         })
         return view

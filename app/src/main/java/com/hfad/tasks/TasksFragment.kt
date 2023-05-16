@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -41,7 +42,10 @@ class TasksFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         //recyclerView
-        val adapter = TaskItemAdapter()
+        val adapter = TaskItemAdapter{
+            //17.1) передаю лямбду конструктору TaskItemAdapter
+            taskId ->  Toast.makeText(context, "Задача № $taskId", Toast.LENGTH_SHORT).show()
+        }
         binding.taskList.adapter = adapter
 
         //livedata. Наблюдаем view model's tasks property, передаем данные адаптеру

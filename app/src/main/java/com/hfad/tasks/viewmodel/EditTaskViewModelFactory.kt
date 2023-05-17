@@ -3,6 +3,7 @@ package com.hfad.tasks.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.hfad.tasks.model.TaskDao
+
 //17.3) Фабрика
 class EditTaskViewModelFactory(private val taskId: Long, private val dao: TaskDao) :
     ViewModelProvider.Factory {

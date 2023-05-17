@@ -6,15 +6,16 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+
 /**Указавыем,как приложение будет получать доступ к данным таблицы,создавая аннотированный интерфейс.
  *  Этот интерфейс определяет DAO — или объект доступа к данным, — который включает в себя все методы,
  *  необходимые приложению для вставки, чтения, обновления и удаления данных.*/
 /*4)Сообщаем Room, что интерфейс TaskDao определяет методы доступа к данным.
 Это делается путем пометки интерфейса аннотацией @Dao:*/
 @Dao
-interface TaskDao{
+interface TaskDao {
     @Insert
-   suspend fun insert(task: Task)
+    suspend fun insert(task: Task)
 
     @Update
     suspend fun update(task: Task)

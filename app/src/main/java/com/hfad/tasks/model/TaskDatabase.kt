@@ -15,10 +15,11 @@ abstract class TaskDatabase : RoomDatabase() {
     поэтому нам нужно добавить новое свойство taskDao в код базы данных TaskDatabase следующим образом:
     */
     abstract val taskDao: TaskDao
-   /*7)Создаем и возвращаем экземпляр базы данных - database
- метод getInstance(), который создаст базу данных и вернет ее экземпляр.Код выглядит следующим образом:
-*/
-   companion object {
+
+    /*7)Создаем и возвращаем экземпляр базы данных - database
+  метод getInstance(), который создаст базу данных и вернет ее экземпляр.Код выглядит следующим образом:
+ */
+    companion object {
         @Volatile
         private var INSTANCE: TaskDatabase? = null
 

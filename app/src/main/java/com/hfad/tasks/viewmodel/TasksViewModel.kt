@@ -42,6 +42,7 @@ class TasksViewModel(val dao: TaskDao) : ViewModel() {
             dao.insert(task)
         }
     }
+
     /*Каждый раз, когда пользователь нажимает на задачу в recycler view, мы хотим, чтобы
     TasksFragment переходил к EditTaskFragment и передавал ему идентификатор задачи.
      Методы onTaskClicked() и onTaskNavigated() будут использоваться для установки значения
@@ -49,10 +50,11 @@ class TasksViewModel(val dao: TaskDao) : ViewModel() {
       а onTaskNavigated()присвоит ему значение null.
 
 */
-fun onTaskClicked (taskId: Long){
-    _navigateToTask.value = taskId
-}
-    fun onTaskNavigated (){
+    fun onTaskClicked(taskId: Long) {
+        _navigateToTask.value = taskId
+    }
+
+    fun onTaskNavigated() {
         _navigateToTask.value = null
     }
 
